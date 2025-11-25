@@ -177,7 +177,7 @@ void UpdateCircle(sf::CircleShape& drawing, Circle& data, sf::Text& label) {
 
     //Centering the label
     sf::Vector2f textcenter = sf::Vector2f(label.getLocalBounds().size.x * 0.5f, label.getLocalBounds().size.y * 0.5f);
-    sf::Vector2f circlecenter = sf::Vector2f(drawing.getPosition().x + data.radius, drawing.getPosition().y + data.radius);
+    sf::Vector2f circlecenter = sf::Vector2f(drawing.getPosition().x + (drawing.getLocalBounds().size.x * 0.5f) , drawing.getPosition().y + (drawing.getLocalBounds().size.y *0.5f));
 
     sf::Vector2f finalPosition = circlecenter - textcenter;
     label.setPosition(finalPosition);
@@ -190,7 +190,7 @@ void UpdateRectangle(sf::RectangleShape& drawing, Rectangle data, sf::Text& labe
     drawing.setPosition(newPosition);
     //Centering the label
     sf::Vector2f textcenter = sf::Vector2f(label.getLocalBounds().size.x * 0.5f, label.getLocalBounds().size.y * 0.5f);
-    sf::Vector2f circlecenter = sf::Vector2f(drawing.getPosition().x + data.Size.x * 0.5f, drawing.getPosition().y + data.Size.y *0.5f);
+    sf::Vector2f circlecenter = sf::Vector2f(drawing.getPosition().x + (drawing.getLocalBounds().size.x * 0.5f), drawing.getPosition().y + (drawing.getLocalBounds().size.y * 0.5f));
     sf::Vector2f finalPosition = circlecenter - textcenter;
     label.setPosition(finalPosition);
     
