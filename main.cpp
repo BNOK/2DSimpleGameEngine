@@ -14,7 +14,7 @@ struct Circle {
     sf::Vector2<float> position = sf::Vector2(100.0f, 100.0f);
     sf::Vector2<float> speed = sf::Vector2( 0.1f, 0.1f);
     sf::Color color = sf::Color::White;
-    int radius = 10;
+    float radius = 10.0f;
 };
 
 struct Rectangle {
@@ -25,13 +25,20 @@ struct Rectangle {
     sf::Vector2<float> Size = sf::Vector2<float>(50.0f, 50.0f);
 };
 
+struct FontData {
+    std::string path = "";
+    int size = 5;
+    sf::Color color = sf::Color::White;
+    sf::Font fontobj;
+};
+
 class ConfigFileReader {
     std::ifstream inputFile;
 public:
     ConfigFileReader() = default;
     
 
-    ConfigFileReader(const std::string& path, sf::Vector2u& winSize, sf::Font& font, std::vector<Circle>& circles, std::vector<Rectangle>& rectangles)
+    ConfigFileReader(const std::string& path, sf::Vector2u& winSize, FontData& font, std::vector<Circle>& circles, std::vector<Rectangle>& rectangles)
     {
         inputFile;
         inputFile.open(path);
@@ -63,8 +70,15 @@ public:
                         winSize.y = std::stoi(params[2]);
                     }
                     else if (params[0] == "Font" && params.size() == 6) {
-                        // set font later
-                        std::cout << "found font" << std::endl;
+                        font.path = params[1];
+                        font.size = std::stoi(params[2]);
+                        font.color = sf::Color(std::stoi(params[3]), std::stoi(params[4]), std::stoi(params[5]));
+
+                        sf::Font tempfont;
+                        if (!tempfont.openFromFile(params[1])) {
+                            std::cerr << " couldnt open the file !" << std::endl;
+                        }
+                        font.fontobj = tempfont;
                     }
                     else if (params[0] == "Circle" && params.size() == 10) {
                         std::cout << "found circle !" << std::endl;
@@ -75,7 +89,7 @@ public:
                         c.speed.x = std::stof(params[4]);
                         c.speed.y = std::stof(params[5]);
                         c.color = sf::Color(std::stoi(params[6]), std::stoi(params[7]), std::stoi(params[8]));
-                        c.radius = std::stoi(params[9]);
+                        c.radius = std::stof(params[9]);
                         circles.push_back(c);
                     }
                     else if (params[0] == "Rectangle" && params.size() == 11) {
@@ -86,7 +100,15 @@ public:
                         r.position.y = std::stof(params[3]);
                         r.speed.x = std::stof(params[4]);
                         r.speed.y = std::stof(params[5]);
-                        r.color = sf::Color(std::stof(params[6]), std::stof(params[7]), std::stof(params[8]));
+
+                        unsigned long rl = std::stoul(params[6]);
+                        unsigned long gl = std::stoul(params[7]);
+                        unsigned long bl = std::stoul(params[8]);
+                        uint8_t r8 = static_cast<uint8_t>(rl);
+                        uint8_t g8 = static_cast<uint8_t>(gl);
+                        uint8_t b8 = static_cast<uint8_t>(bl);
+
+                        r.color = sf::Color(r8, g8, b8);
                         r.Size.x = std::stof(params[9]);
                         r.Size.y = std::stof(params[10]);
                         rectangles.push_back(r);
@@ -127,21 +149,79 @@ void PrintGlobals(std::string path, sf::Vector2<int> winSize, sf::Font font, std
     std::cout << "Circles :" << circles.size() << " Rectangles :" << rectangles.size() << std::endl;
 }
 
-void UpdateCircle(sf::CircleShape& drawing, Circle data) {
+// ANIMATION FUNCTIONS
+void UpdateCircle(sf::CircleShape& drawing, Circle& data) {
     drawing.setRadius(data.radius);
 
-    sf::Vector2f newPosition = drawing.getPosition() + (data.speed * 0.1f);
-    drawing.setPosition(newPosition);
+    sf::Vector2f newPosition = drawing.getPosition() + (data.speed);
 
+    drawing.setPosition(newPosition);
+    data.position = newPosition;
     drawing.setFillColor(data.color);
 }
 void UpdateRectangle(sf::RectangleShape& drawing, Rectangle data) {
     drawing.setSize(data.Size);
 
-    sf::Vector2f newPosition = drawing.getPosition() + (data.speed * 0.1f);
-    drawing.setPosition(newPosition);
+    sf::Vector2f newPosition = drawing.getPosition() + (data.speed);
 
+    drawing.setPosition(newPosition);
+    data.position = newPosition;
     drawing.setFillColor(data.color);
+}
+
+
+// COLLISION CHECK FOR BOTH SHAPES
+void CheckCircleCollision(sf::Window& window, sf::Shape& shape ) {
+    //std::cout << "circle window : " << window.getSize().x << " -- " << window.getSize().y << std::endl;
+    
+}
+void CheckRectangleCollision(sf::Window& window, sf::Shape& shape) {
+    //std::cout << "rectangle window : " << window.getSize().x << " -- " << window.getSize().y << std::endl;
+    
+}
+
+
+// FONT HELPER FUNCTION
+std::vector<sf::Text> SetupCircleLabels(std::vector<Circle> circles, FontData& font) {
+    sf::Text temp(font.fontobj);
+
+    std::vector<sf::Text> labels;
+    for (int i = 0; i < circles.size(); i++) {
+        temp.setCharacterSize(font.size);
+        temp.setFillColor(font.color);
+        temp.setString(circles[i].name);
+        temp.setPosition(sf::Vector2f(100.0f, 100.0f));
+        labels.push_back(temp);
+    }
+
+    return labels;
+}
+std::vector<sf::Text> SetupRectangleLabels(std::vector<Rectangle> rectangles, FontData& font) {
+    sf::Text temp(font.fontobj);
+    std::vector<sf::Text> labels;
+    for (int i = 0; i < rectangles.size(); i++) {
+        temp.setCharacterSize(font.size);
+        temp.setFillColor(font.color);
+        temp.setString(rectangles[i].name);
+        temp.setPosition(sf::Vector2f(100.0f, 100.0f));
+        labels.push_back(temp);
+    }
+
+    return labels;
+}
+
+void UpdateLabelPosition(std::vector<Circle> circles, std::vector<Rectangle> rectangles, std::vector<sf::Text> circlelabel, std::vector<sf::Text> rectanglelabel) {
+
+    for (int i = 0; i < circlelabel.size(); i++) {
+        circlelabel[i].setPosition(circles[i].position);
+        if (i == 0) {
+            std::cout << "circle position : " << circles[i].position.x << " -- " << circles[i].position.y << std::endl;
+        }
+    }
+    for (int i = 0; i < rectanglelabel.size(); i++) {
+        circlelabel[i].setPosition(rectangles[i].position);
+    }
+
 }
 
 
@@ -150,20 +230,22 @@ int main()
     // global variables
     std::string Path = "D:\\Projects\\2DSimpleGameEngine\\Config.txt";
     sf::Vector2u windowSize = sf::Vector2(800u, 600u);
-    sf::Font font;
+    
+    
     // data from the config file
     std::vector<Circle> CircleData;
     std::vector<Rectangle> RectangleData;
+    FontData font;
 
     // Config file PATH
     ConfigFileReader(Path, windowSize, font, CircleData, RectangleData);
 
     // circle shapes to draw
     std::vector<sf::CircleShape> Circles(CircleData.size());
+    std::vector<sf::Text> CircleLabel = SetupCircleLabels(CircleData, font);
     std::vector<sf::RectangleShape> Rectangles(RectangleData.size());
-
-
-
+    std::vector<sf::Text> RectangleLabel = SetupRectangleLabels(RectangleData, font);
+    
     // create the window
     sf::RenderWindow window(sf::VideoMode({ windowSize.x, windowSize.y }), "My window");
 
@@ -181,25 +263,28 @@ int main()
         // prepare shapes to be drawn
         for (int i = 0; i < CircleData.size(); i++) {
             UpdateCircle(Circles[i], CircleData[i]);
+            CheckCircleCollision(window, Circles[i]);
         }
         for (int i = 0; i < RectangleData.size(); i++) {
             UpdateRectangle(Rectangles[i], RectangleData[i]);
+            CheckRectangleCollision(window, Rectangles[i]);
         }
-
+        UpdateLabelPosition(CircleData, RectangleData, CircleLabel, RectangleLabel);
 
         // Drawing process (delete, process , display)
         window.clear(sf::Color::Black);
 
         // draw everything here...
-        window.draw(sf::CircleShape(10.0f));
-        for (sf::CircleShape circle : Circles) {
-            window.draw(circle);
-
+        
+        for (int i = 0; i < Circles.size(); i++) {
+            window.draw(Circles[i]);
+            window.draw(CircleLabel[i]);
         }
-        for (sf::RectangleShape rectangle : Rectangles) {
-            window.draw(rectangle);
-
+        for (int i = 0; i < Rectangles.size(); i++) {
+            window.draw(Rectangles[i]);
+            window.draw(RectangleLabel[i]);
         }
+        
 
         // end the current frame
         window.display();

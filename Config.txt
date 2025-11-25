@@ -1,6 +1,6 @@
 Window 800	600
 
-Font fonts/arial.ttf 18 255 255 255
+Font D:\Projects\2DSimpleGameEngine\x64\Debug\Chenolyta-Regular.ttf 18 255 255 255
 
 Circle CGreen 400 400 -0.03 0.02 0 255 0 50
 Circle CBlue 300 500 0.02 0.04 0 255 0 100
