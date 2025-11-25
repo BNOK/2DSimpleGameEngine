@@ -172,7 +172,7 @@ void SetupRectangles(std::vector<sf::RectangleShape>& rects, std::vector<Rectang
 }
 
 void UpdateCircle(sf::CircleShape& drawing, Circle& data, sf::Text& label) {
-    sf::Vector2f newPosition = drawing.getPosition() + (data.speed * 0.1f);
+    sf::Vector2f newPosition = drawing.getPosition() + (data.speed);
     drawing.setPosition(newPosition);
 
     //Centering the label
@@ -185,7 +185,7 @@ void UpdateCircle(sf::CircleShape& drawing, Circle& data, sf::Text& label) {
     data.position = newPosition;
 }
 void UpdateRectangle(sf::RectangleShape& drawing, Rectangle data, sf::Text& label) {
-    sf::Vector2f newPosition = drawing.getPosition() + (data.speed * 0.1f);
+    sf::Vector2f newPosition = drawing.getPosition() + (data.speed);
 
     drawing.setPosition(newPosition);
     //Centering the label
@@ -199,13 +199,39 @@ void UpdateRectangle(sf::RectangleShape& drawing, Rectangle data, sf::Text& labe
 
 
 // COLLISION CHECK FOR BOTH SHAPES
-void CheckCircleCollision(sf::Window& window, sf::Shape& shape ) {
-    //std::cout << "circle window : " << window.getSize().x << " -- " << window.getSize().y << std::endl;
-    
+void CheckCircleCollision(sf::Window& window, sf::CircleShape& shape, Circle& data ) {
+    sf::Vector2f origin = shape.getPosition();
+    sf::Vector2f bound = shape.getLocalBounds().size;
+
+    if (origin.x <= 0) {
+        data.speed.x *= -1.0f;
+    }
+    if (bound.x + origin.x >= window.getSize().x) {
+        data.speed.x *= -1.0f;
+    }
+    if (origin.y <= 0) {
+        data.speed.y *= -1.0f;
+    }
+    if (bound.y + origin.y >= window.getSize().y) {
+        data.speed.y *= -1.0f;
+    }
 }
-void CheckRectangleCollision(sf::Window& window, sf::Shape& shape) {
-    //std::cout << "rectangle window : " << window.getSize().x << " -- " << window.getSize().y << std::endl;
-    
+void CheckRectangleCollision(sf::Window& window, sf::RectangleShape& shape, Rectangle& data) {
+    sf::Vector2f origin = shape.getPosition();
+    sf::Vector2f bound = shape.getLocalBounds().size;
+
+    if (origin.x <= 0) {
+        data.speed.x *= -1.0f;
+    }
+    if (bound.x + origin.x >= window.getSize().x) {
+        data.speed.x *= -1.0f;
+    }
+    if (origin.y <= 0) {
+        data.speed.y *= -1.0f;
+    }
+    if (bound.y + origin.y >= window.getSize().y) {
+        data.speed.y *= -1.0f;
+    }
 }
 
 
@@ -280,11 +306,11 @@ int main()
         // update position, 
         for (int i = 0; i < CircleData.size(); i++) {
             UpdateCircle(Circles[i], CircleData[i], CircleLabel[i]);
-            //CheckCircleCollision(window, Circles[i]);
+            CheckCircleCollision(window, Circles[i], CircleData[i]);
         }
         for (int i = 0; i < RectangleData.size(); i++) {
             UpdateRectangle(Rectangles[i], RectangleData[i], RectangleLabel[i]);
-            //CheckRectangleCollision(window, Rectangles[i]);
+            CheckRectangleCollision(window, Rectangles[i], RectangleData[i]);
         }
         
 
