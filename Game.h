@@ -10,7 +10,7 @@ class Game
 	Entity				m_player;
 	EntityManager		m_entityManager;
 
-	void init();
+	void Init(int width, int height, std::string label);
 	void sMovement();
 	void sUserInput();
 	void sRender();
@@ -18,8 +18,9 @@ class Game
 	void sCollision();
 
 public:
-
+	Game(int width, int height, std::string label) {
+		Init(width, height, label);
+	}
 	void Update();
-
 };
 

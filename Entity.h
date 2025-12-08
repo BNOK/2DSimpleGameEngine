@@ -5,7 +5,7 @@ class Entity
 {
 	std::string m_tag;
 	bool		m_active;
-	int			m_ID;
+	size_t			m_ID;
 
 public :
 	SPtr<CTransform> Transform;
@@ -14,5 +14,7 @@ public :
 	SPtr<CScore>	 Score;
 	SPtr<CInput>	 Input;
 	SPtr<CLifeSpan>	 LifeSpan;
+
+
 };
 
