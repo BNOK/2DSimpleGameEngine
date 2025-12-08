@@ -4,10 +4,10 @@
 class CTransform {
 
 public :
-	Vec2 Position = { 0.0f, 0.0f };
-	Vec2 Scale = { 0.0f, 0.0f };
-	Vec2 Speed = { 0.0f, 0.0f };
-	float Angle = 0.0f;
+	Vec2	Position	= { 0.0f, 0.0f };
+	Vec2	Scale		= { 0.0f, 0.0f };
+	Vec2	Speed		= { 0.0f, 0.0f };
+	float	Angle		= 0.0f;
 
 	CTransform() {};
 	CTransform(Vec2 pos, Vec2 scale, Vec2 speed, float angle) : Position(pos), Scale(scale), Speed(speed), Angle(angle) {};
@@ -55,8 +55,8 @@ public:
 };
 
 class CLifeSpan {
-	int total = 0;
-	int remaining = 0;
+	int total		= 0;
+	int remaining	= 0;
 
 	CLifeSpan() {};
 	CLifeSpan(int total) : total(total), remaining(total){}
