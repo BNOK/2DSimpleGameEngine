@@ -7,10 +7,11 @@
 #include <sstream>
 #include <iostream>
 #include <math.h>
+#include <map>
 #include "Vec2.h"
 
 template <class T>
-using SPtr = std::shared_ptr<T>;
+using sptr = std::shared_ptr<T>;
 
 
 

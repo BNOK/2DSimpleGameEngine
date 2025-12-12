@@ -1,5 +1,9 @@
 #include "Game.h"
 
+/* Variable declaration notation :
+   m_varName : private variables
+   varName   : public variables */
+
 int main()
 {
     Game mainGame;
