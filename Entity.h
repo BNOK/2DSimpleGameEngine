@@ -8,7 +8,7 @@ class Entity
 	bool			m_active = false;
 
 	Entity() {};
-	Entity(std::string tag, size_t ID, bool isactive) : m_tag(tag), m_ID(ID), m_active(isactive) {};
+	Entity(std::string tag, size_t ID) : m_tag(tag), m_ID(ID) {};
 
 public :
 	sptr<CTransform> Transform;
@@ -18,10 +18,12 @@ public :
 	sptr<CInput>	 Input;
 	sptr<CLifeSpan>	 LifeSpan;
 
-	std::string& getTag();
-	size_t	getID() const;
-	void	Destroy();
-	void	Activate();
+	std::string&	getTag();
+	size_t			getID()		const;
+	bool			getActive() const;
+
+	void			Destroy();
+	void			Activate();
 
 	friend class EntityManager;
 	

@@ -11,6 +11,10 @@ size_t Entity::getID() const
 	return this->m_ID;
 }
 
+bool Entity::getActive() const{
+	return m_active;
+}
+
 void Entity::Destroy()
 {
 	m_active = false;

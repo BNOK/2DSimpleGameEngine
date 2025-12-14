@@ -9,14 +9,21 @@ class EntityManager
 	EntityVec m_entities;
 	EntityMap m_entityMap;
 	EntityVec m_toAdd;
-	EntityVec m_toDestroy;
 
-	void Init();
+	size_t m_totalEntities;
+
+	void Init(std::string config);
 
 public:
+
+	EntityManager():m_totalEntities(0) {};
+
+
 	void Update();
 
-	std::vector<Entity>& getEntities();
-	std::vector<Entity>& getEntities(std::string tag);
+	sptr<Entity>& addEntity(const std::string tag);
+	void DestroyEntities();
+	const EntityVec& getEntities();
+	const EntityVec& getEntities(const std::string tag);
 };
 
