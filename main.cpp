@@ -6,30 +6,30 @@
 
 int main()
 {
-    Game mainGame;
+    //Game mainGame;
 
-    float radius = 5.0f;
-    // The main loop - ends as soon as the window is closed
-    while (mainGame.m_window.isOpen())
-    {
-        // Event processing
-        while (const std::optional event = mainGame.m_window.pollEvent())
-        {
-            // Request for closing the window
-            if (event->is<sf::Event::Closed>())
-                mainGame.m_window.close();
-        }
+    //float radius = 5.0f;
+    //// The main loop - ends as soon as the window is closed
+    //while (mainGame.GetGameState())
+    //{
+    //    // Event processing
+    //    while (const std::optional event = mainGame.GetWindowReference()->pollEvent())
+    //    {
+    //        // Request for closing the window
+    //        if (event->is<sf::Event::Closed>())
+    //            mainGame.GetWindowReference()->close();
+    //    }
 
-        radius += 0.1f;
+    //    radius += 0.1f;
 
 
-        // Clear the whole window before rendering a new frame
-        mainGame.m_window.clear();
+    //    // Clear the whole window before rendering a new frame
+    //    mainGame.GetWindowReference()->clear();
 
-        // Draw some graphical entities
-        mainGame.m_window.draw(sf::CircleShape(radius));
+    //    // Draw some graphical entities
+    //    mainGame.GetWindowReference()->draw(sf::CircleShape(radius));
 
-        // End the current frame and display its contents on screen
-        mainGame.m_window.display();
-    }
+    //    // End the current frame and display its contents on screen
+    //    mainGame.GetWindowReference()->display();
+    //}
 }

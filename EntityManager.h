@@ -22,8 +22,10 @@ public:
 	void Update();
 
 	sptr<Entity>& addEntity(const std::string tag);
-	void DestroyEntities();
+	void DestroyDeadEntities();
 	const EntityVec& getEntities();
 	const EntityVec& getEntities(const std::string tag);
+
+	void ActivateEntities();
 };
 

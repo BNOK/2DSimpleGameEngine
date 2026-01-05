@@ -3,8 +3,9 @@
 #include "Components.h"
 class Entity
 {
+	
 	std::string		m_tag = "";
-	size_t			m_ID;
+	size_t			m_ID = -1;
 	bool			m_active = false;
 
 	Entity() {};
@@ -25,7 +26,7 @@ public :
 	void			Destroy();
 	void			Activate();
 
-	friend class EntityManager;
 	
+	friend class EntityManager;
 };
 

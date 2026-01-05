@@ -4,13 +4,12 @@
 
 class Game
 {
-	sf::RenderWindow	m_window;
+	std::unique_ptr<sf::RenderWindow> m_window;
 	bool				m_paused = false;
 	bool				m_isactive = true;
-	Entity				m_player;
-	EntityManager		m_entityManager;
+	EntityManager*	m_entityManager;
 
-	void Init(int width, int height, std::string label);
+	void Init(uint16_t width, uint16_t height, std::string label);
 	void sMovement();
 	void sUserInput();
 	void sRender();
@@ -18,9 +17,20 @@ class Game
 	void sCollision();
 
 public:
-	Game(int width, int height, std::string label) {
+	Game();
+	Game(uint16_t width, uint16_t height, std::string label)
+	{
 		Init(width, height, label);
-	}
+	};
 	void Update();
+
+
+	// getters
+	bool GetIsActive();
+	bool GetIsPaused();
+	
+	sf::RenderWindow& GetWindowReference();
+
+	
 };
 
