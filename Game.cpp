@@ -52,14 +52,26 @@ bool Game::LoadConfig(const std::string& filename)
 				properties[i] = temp;
 				std::cout << "index :" << i << " value :" << temp << std::endl;
 			}
-			sptr<Entity>& playerobj = m_entityManager->AddEntity(type);
-			playerobj->Shape = std::make_shared<CShape>(
+			auto gameobject = m_entityManager->AddEntity(type);
+			if(!gameobject)
+			{
+				continue;
+			}
+			gameobject->Shape = std::make_shared<CShape>(
 				properties[0],
-				static_cast<int>(properties[3]),
+				properties[10],
 				properties[9],
-				sf::Color(static_cast<std::uint8_t>(properties[3]), static_cast<std::uint8_t>(properties[4]), static_cast<std::uint8_t>(properties[5])),
-				sf::Color(static_cast<std::uint8_t>(properties[6]), static_cast<std::uint8_t>(properties[7]), static_cast<std::uint8_t>(properties[8]))
+				sf::Color(properties[3], properties[4], properties[5]),
+				sf::Color(properties[6], properties[7], properties[8])
 				);
+
+			//gameobject->Collision = std::make_shared<CCollision>(properties[1]);
+			Vec2* startposition = new Vec2((float)m_window->getSize().x, (float)m_window->getSize().y);
+			gameobject->Transform = std::make_shared<CTransform>(startposition);
+
+
+			std::cout << "created object of type : " << type << std::endl;
+
 		}
 		
 	}

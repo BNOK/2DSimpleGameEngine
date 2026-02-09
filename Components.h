@@ -4,13 +4,17 @@
 class CTransform {
 
 public :
-	Vec2	Position	= { 0.0f, 0.0f };
-	Vec2	Scale		= { 0.0f, 0.0f };
-	Vec2	Speed		= { 0.0f, 0.0f };
-	float	Angle		= 0.0f;
+Vec2	Position;
+Vec2	Scale;
+Vec2	Speed;
+float	Angle;
 
-	CTransform() {};
-	CTransform(Vec2 pos, Vec2 scale, Vec2 speed, float angle) : Position(pos), Scale(scale), Speed(speed), Angle(angle) {};
+	CTransform() : Position({0.0f, 0.0f}), Scale({10.0f, 10.0f}), Speed({1.0f, 1.0f}), Angle(0.0f)
+	{};
+	CTransform(Vec2 pos = {0.0f, 0.0f}, Vec2 scale = {10.0f, 10.0f}, Vec2 speed = {1.0f, 1.0f}, float angle = 0.0f) : Position(pos), Scale(scale), Speed(speed), Angle(angle)
+	{};
+	CTransform(Vec2 pos = {0.0f, 0.0f}) : Position(pos), Scale({10.0f, 10.0f}), Speed({1.0f, 1.0f}), Angle(0.0f)
+	{};
 };
 
 class CShape {
@@ -33,8 +37,9 @@ class CCollision {
 public:
 	float radius = 0;
 
-	CCollision() {};
-	CCollision(float radius) : radius(radius) {};
+	CCollision() : radius(10.0f)
+	{};
+	CCollision(float radius = 10.0f) : radius(radius) {};
 };
 
 class CInput {
@@ -52,14 +57,14 @@ public:
 	int score = 0;
 
 	CScore() {};
-	CScore(int value): score(value) {}
+	CScore(int value = 0): score(value) {}
 };
 
 class CLifeSpan {
 	int total		= 0;
 	
 	CLifeSpan() {};
-	CLifeSpan(int total) : total(total){}
+	CLifeSpan(int total = 0) : total(total){}
 };
 
 

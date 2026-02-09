@@ -9,7 +9,9 @@ class Entity
 	bool			m_active = true;
 
 	Entity() {};
-	Entity(std::string tag, size_t ID) : m_tag(tag), m_ID(ID) {};
+	Entity(std::string tag, size_t ID) : m_tag(tag), m_ID(ID)
+	{};
+
 
 public :
 	sptr<CTransform> Transform;

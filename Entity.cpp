@@ -2,6 +2,13 @@
 #include "Entity.h"
 
 
+//Entity::Entity(std::string tag, size_t ID) : m_tag(tag), m_ID(ID)
+//{
+//	Transform = std::make_shared<CTransform>();
+//	Collision = std::make_shared<CCollision>();
+//	Shape = std::make_shared<CShape>();
+//};
+
 std::string& Entity::getTag() {
 	return this->m_tag;
 }
