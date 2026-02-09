@@ -29,6 +29,15 @@ Vec2& Vec2::operator * (Vec2& other) {
 	return result;
 }
 
+Vec2& Vec2::operator+=(Vec2& other)
+{
+	Vec2 result;
+	result.x = this->x + other.x;
+	result.y = this->y + other.y;
+
+	return result;
+}
+
 float Vec2::dotproduct(const Vec2& v1, const Vec2& v2) {
 	float result = 0;
 	result = (v1.x * v2.x) + (v1.y * v2.y);

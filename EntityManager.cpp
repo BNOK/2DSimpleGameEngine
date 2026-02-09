@@ -16,7 +16,6 @@ void EntityManager::Update() {
 	}
 
 	m_toAdd.clear();
-
 	// delete dead entities
 	DestroyDeadEntities();
 }

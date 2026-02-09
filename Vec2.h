@@ -11,7 +11,7 @@ public :
 	float y;
 
 	Vec2() : x(0), y(0) {};
-	Vec2(float inx, float iny) :x(inx), y(iny) {};
+	Vec2(float inx, float iny) :x(static_cast<float>(inx)), y(static_cast<float>(iny)) {};
 
 
 	bool operator == (Vec2& other);
@@ -19,6 +19,7 @@ public :
 	Vec2& operator + (Vec2& other);
 	Vec2& operator - (Vec2& other);
 	Vec2& operator * (Vec2& other);
+	Vec2& operator += (Vec2& other);
 
 	float dotproduct(const Vec2& v1, const Vec2& v2);
 

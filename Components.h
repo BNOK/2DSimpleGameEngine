@@ -9,12 +9,18 @@ Vec2	Scale;
 Vec2	Speed;
 float	Angle;
 
-	CTransform() : Position({0.0f, 0.0f}), Scale({10.0f, 10.0f}), Speed({1.0f, 1.0f}), Angle(0.0f)
+	CTransform()
+	{
+		Position = {0.0f, 0.0f};
+		Scale = {10.0f,10.0f};
+		Speed = {1.0f, 1.0f};
+		Angle = 0.0f;
+	};
+	CTransform(Vec2 pos , Vec2 scale , Vec2 speed , float angle) : Position(pos), Scale(scale), Speed(speed), Angle(angle)
 	{};
-	CTransform(Vec2 pos = {0.0f, 0.0f}, Vec2 scale = {10.0f, 10.0f}, Vec2 speed = {1.0f, 1.0f}, float angle = 0.0f) : Position(pos), Scale(scale), Speed(speed), Angle(angle)
+	CTransform(Vec2 pos) : Position(pos), Scale({10.0f, 10.0f}), Speed({10.0f, 10.0f}), Angle(0.0f)
 	{};
-	CTransform(Vec2 pos = {0.0f, 0.0f}) : Position(pos), Scale({10.0f, 10.0f}), Speed({1.0f, 1.0f}), Angle(0.0f)
-	{};
+	
 };
 
 class CShape {

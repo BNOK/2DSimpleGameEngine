@@ -38,19 +38,20 @@ bool Game::LoadConfig(const std::string& filename)
 			m_window = std::make_unique<sf::RenderWindow>(
 				sf::VideoMode({width, height}),
 				label);
+			m_window->setFramerateLimit(60);
 		}
 		// needs to be updated according to config file
 		else if(type == "Player" || type == "Enemy" || type == "Bullet")
 		{
 			std::cout << type << std::endl;
-			int properties[11];
+			float properties[11];
 			
 			for(int i = 0; i < 11; i++)
 			{
 				float temp;
 				iss >> temp;
 				properties[i] = temp;
-				std::cout << "index :" << i << " value :" << temp << std::endl;
+				//std::cout << "index :" << i << " value :" << temp << std::endl;
 			}
 			auto gameobject = m_entityManager->AddEntity(type);
 			if(!gameobject)
@@ -66,8 +67,10 @@ bool Game::LoadConfig(const std::string& filename)
 				);
 
 			//gameobject->Collision = std::make_shared<CCollision>(properties[1]);
-			Vec2* startposition = new Vec2((float)m_window->getSize().x, (float)m_window->getSize().y);
-			gameobject->Transform = std::make_shared<CTransform>(startposition);
+			Vec2 startposition(m_window->getSize().x /2, m_window->getSize().y /2);
+			Vec2 scale(properties[0],properties[0]);
+			Vec2 speed(properties[2], properties[2]);
+			gameobject->Transform = std::make_shared<CTransform>(startposition, scale, speed, 0.0f);
 
 
 			std::cout << "created object of type : " << type << std::endl;
@@ -79,11 +82,37 @@ bool Game::LoadConfig(const std::string& filename)
 	return true;
 }
 
+void Game::Update()
+{
+	
+	m_entityManager->Update();
+	
+
+	
+	sMovement();
+
+	// last thing is rendering 
+	sRender();
+}
+
 void Game::sMovement()
-{}
+{
+	auto array = m_entityManager->getEntities();
+	for(int i = 0; i < array.size(); i++)
+	{
+		//std::cout << "current object : " << array[i]->getTag() << std::endl;
+		std::cout << "current position" << array[i]->Transform->Position.x  << "||" << array[i]->Transform->Position.y << std::endl;
+		auto& transform = array[i]->Transform;
+		transform->Position = transform->Position + transform->Speed;
+		array[i]->Shape->shape.setPosition(sf::Vector2f(transform->Position.x, transform->Position.y));
+	}
+}
 
 void Game::sUserInput()
-{}
+{
+	
+
+}
 
 void Game::sRender()
 {
@@ -91,7 +120,7 @@ void Game::sRender()
 	m_window->clear(sf::Color::Black);
 
 	auto holder = m_entityManager->getEntities();
-	std::cout << holder.size() << std::endl;
+	//std::cout << holder.size() << std::endl;
 	for(int i = 0; i < holder.size(); i++)
 	{
 		m_window->draw(holder[i]->Shape->shape);
@@ -107,17 +136,6 @@ void Game::sEnemySpawn()
 
 void Game::sCollision()
 {}
-
-void Game::Update()
-{
-	m_entityManager->Update();
-
-
-
-
-	// last thing is rendering 
-	sRender();
-}
 
 bool Game::GetIsActive()
 {
