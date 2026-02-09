@@ -21,10 +21,11 @@ void EntityManager::Update() {
 	DestroyDeadEntities();
 }
 
-sptr<Entity>& EntityManager::addEntity(const std::string tag) {
+sptr<Entity>& EntityManager::AddEntity(const std::string tag) {
 
 	sptr<Entity> entity = std::shared_ptr<Entity>(new Entity(tag, m_totalEntities));
 	m_toAdd.push_back(entity);
+	m_totalEntities++;
 	return entity;
 }
 
@@ -33,7 +34,6 @@ void EntityManager::ActivateEntities() {
 	for (auto& entity : m_toAdd) {
 		m_entities.push_back(entity);
 		m_entityMap[entity->m_tag].push_back(entity);
-		m_totalEntities++;
 	}
 }
 

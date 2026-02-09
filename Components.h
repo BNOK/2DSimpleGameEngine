@@ -19,7 +19,9 @@ public:
 
 
 	CShape() : shape(sf::CircleShape(10.0f)) {};
-	CShape(float radius, int points, float outlinethickness, sf::Color fillcolor, sf::Color outlinecolor) :shape(radius, points) {
+	CShape(float radius, int points, float outlinethickness, sf::Color fillcolor, sf::Color outlinecolor) 
+		:shape(radius, points) {
+		//shape = sf::CircleShape(radius, points);
 		shape.setFillColor(fillcolor);
 		shape.setOutlineThickness(outlinethickness);
 		shape.setOutlineColor(outlinecolor);
@@ -50,16 +52,14 @@ public:
 	int score = 0;
 
 	CScore() {};
-
 	CScore(int value): score(value) {}
 };
 
 class CLifeSpan {
 	int total		= 0;
-	int remaining	= 0;
-
+	
 	CLifeSpan() {};
-	CLifeSpan(int total) : total(total), remaining(total){}
+	CLifeSpan(int total) : total(total){}
 };
 
 

@@ -32,6 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="ConfigTemplate.txt" />
     <Text Include="Config.txt" />
   </ItemGroup>
   <ItemGroup>

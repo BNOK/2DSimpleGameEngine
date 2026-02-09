@@ -6,7 +6,7 @@ class Entity
 	
 	std::string		m_tag = "";
 	size_t			m_ID = -1;
-	bool			m_active = false;
+	bool			m_active = true;
 
 	Entity() {};
 	Entity(std::string tag, size_t ID) : m_tag(tag), m_ID(ID) {};
@@ -25,7 +25,7 @@ public :
 
 	void			Destroy();
 	void			Activate();
-
+	
 	
 	friend class EntityManager;
 };

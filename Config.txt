@@ -1,11 +1,7 @@
-Window 800	600
+Window 800 600 Testing_Window
 
-Font D:\Projects\2DSimpleGameEngine\x64\Debug\Chenolyta-Regular.ttf 18 255 255 255
+Player 400 400 10 0 0 0 255 0 0 5 6
 
-Circle CGreen 400 400 -0.03 0.02 0 255 0 50
-Circle CBlue 300 300 0.02 0.04 0 255 0 100
-Circle CPurple 300 300 -0.02 -0.01 255 0 255 75
+Enemy 200 200 10 0 0 0 255 0 0 5 3
 
-Rectangle RRed 200 200 0.1 0.15 255 0 0 50 25
-Rectangle RGrey 300 250 -0.02 0.02 100 100 100 50 100
-Rectangle RTeal 25 100 -0.02 -0.02 0 255 255 100 100
+Bullet 400 400 10 0 0 0 255 0 0 5 6

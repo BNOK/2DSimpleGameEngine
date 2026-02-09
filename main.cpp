@@ -6,30 +6,21 @@
 
 int main()
 {
-    //Game mainGame;
+    std::string configPath = "D:\\Projects\\2DSimpleGameEngine\\Config.txt";
+    Game mainGame(configPath);
+    sf::RenderWindow& window = mainGame.GetWindowReference();
 
-    //float radius = 5.0f;
-    //// The main loop - ends as soon as the window is closed
-    //while (mainGame.GetGameState())
-    //{
-    //    // Event processing
-    //    while (const std::optional event = mainGame.GetWindowReference()->pollEvent())
-    //    {
-    //        // Request for closing the window
-    //        if (event->is<sf::Event::Closed>())
-    //            mainGame.GetWindowReference()->close();
-    //    }
-
-    //    radius += 0.1f;
+	while(mainGame.GetWindowReference().isOpen())
+	{
+        // check all the window's events that were triggered since the last iteration of the loop
+        while(const std::optional event = window.pollEvent())
+        {
+            // "close requested" event: we close the window
+            if(event->is<sf::Event::Closed>())
+                window.close();
+        }
 
 
-    //    // Clear the whole window before rendering a new frame
-    //    mainGame.GetWindowReference()->clear();
-
-    //    // Draw some graphical entities
-    //    mainGame.GetWindowReference()->draw(sf::CircleShape(radius));
-
-    //    // End the current frame and display its contents on screen
-    //    mainGame.GetWindowReference()->display();
-    //}
+        mainGame.Update();
+	}
 }
